@@ -1,47 +1,56 @@
 
 public class PriorityQueue extends Queue {
     private final Task[] pTaskArr;
-    private int index;
+    private final int maxSize;
+    private int front;
+    private int count;
 
 
-    PriorityQueue(){
-        pTaskArr= new Task[super.getMaxSize()];
-        index = 0;
+
+    PriorityQueue(int s) {
+        super(s);
+        maxSize = s;
+        pTaskArr = super.taskArr;
+        front = super.front;
+        count = super.count;
 
     }
     @Override
     public void enqueue(Task newTask) {
-        Task tempTask = new Task();
-        if (super.isFull()) {
+        if (count == maxSize) {
             System.out.println("PQueue is full!");
+            return;
         }
-        if(super.isEmpty() ){
-            pTaskArr[0] = newTask;
-            index++;
-        }else{
-
-            for (int i = 0; i < super.getMaxSize(); i++)
-            {
-                for (int j = i + 1; j < super.getMaxSize(); j++)
-                {
-                    if (pTaskArr[i].getPriority() < pTaskArr[j].getPriority())
-                    {
-                        tempTask = pTaskArr[i];
-                        pTaskArr[i] = pTaskArr[j];
-                        pTaskArr[j] = tempTask;
-                    }
-                }
+        if (count == 0) {// Insert First Element
+            front++;
+            pTaskArr[front] = newTask;
+            count++;
+        } else {
+            int i;
+            for (i = count - 1; i >= 0; i--) {
+                if (newTask.getPriority() > pTaskArr[i].getPriority())
+                    pTaskArr[i + 1] = pTaskArr[i];
+                else
+                    break;
             }
-            index++;
-
+            pTaskArr[i + 1] = newTask;
+            count++;
         }
-
-
     }
-
+    @Override
+    public void dequeue()
+    {
+        if(super.isEmpty()){
+            System.out.println("PQueue is empty");
+        }
+        pTaskArr[count - 1] = null;
+        front++;
+        count--;
+    }
     @Override
     public void display() {
-
-
+        for (int i = 0 ; i < count ; i++){
+            System.out.println(pTaskArr[i].getDescription() + " " + pTaskArr[i].getPriority());
+        }
     }
 }

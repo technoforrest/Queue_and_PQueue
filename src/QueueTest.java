@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class QueueTest {
@@ -8,8 +7,7 @@ public class QueueTest {
         input the task description and task priority. You need provide plenty of tests. For example,
         special cases for “enqueue” (when a queue is full) or “dequeue” (when a queue is empty). */
         Queue queue = new Queue(3);
-        PriorityQueue pQueue = new PriorityQueue();
-        int count = 0;
+        PriorityQueue pQueue = new PriorityQueue(3);
         Task task;
         Scanner scanner = new Scanner(System.in);
 
@@ -17,17 +15,22 @@ public class QueueTest {
             task = new Task();
             System.out.println("Please input a task.");
             task.taskDescription(scanner.next());
-            //System.out.println("Please input a priority.");
-            //task.setPriority(scanner.nextInt());
+            System.out.println("Please input a priority.");
+            task.setPriority(scanner.nextInt());
             queue.enqueue(task);
-            count++;
+            pQueue.enqueue(task);
+
         }
-        System.out.println("Elements in queue are: ");
+        System.out.println("Elements in Queue are: ");
         queue.display();
-        System.out.println("Elements after dequeue are: ");
+        System.out.println("Elements in PQueue are: ");
+        pQueue.display();
+        System.out.println("Elements after Queue dequeue are: ");
         queue.dequeue();
         queue.display();
-
+        System.out.println("Elements after PQueue dequeue are: ");
+        pQueue.dequeue();
+        pQueue.display();
 
 
     }

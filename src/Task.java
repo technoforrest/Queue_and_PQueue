@@ -6,11 +6,11 @@ public class Task {
        taskDescr = string;
 
     }
-    private void priorityTask(int num){
+    /*private void priorityTask(int num){
         // A larger number means a higher priority.
         // If different tasks happen to have
         // the same priority, follow the rule “First-Come-First-Serve (FCFS)”.
-    }
+    }*/
      public String getDescription(){
        return taskDescr;
     }

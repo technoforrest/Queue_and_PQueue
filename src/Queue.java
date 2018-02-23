@@ -1,25 +1,18 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Queue {
-    private final Task[] taskArr;
-    private int front = -1;//front of queue is first out
+    protected final Task[] taskArr;
+    protected int front = -1;//front of queue is first out
     private int back = -1;
-    protected int size;
-    protected final int maxSize;
+    protected int count;
+    private final int maxSize;
 
-    public Queue() {
-        taskArr = new Task[0];
-        maxSize = 0;
-
-    }
     /**
      * Constructor
      */
     Queue(int s) {
-        size = s;
+        //System.out.println("Inside parameter constructor");
+        count = 0;
         maxSize = s;
-        taskArr = new Task[size];
+        taskArr = new Task[maxSize];
     }
 
 
@@ -28,10 +21,8 @@ public class Queue {
      * Determines if queue is empty or not
      * @return true if queue is empty or false if it is not
      */
-    public boolean isEmpty() { // check whether the queue is empty
-
-            return size == 0;
-
+    boolean isEmpty() { // check whether the queue is empty
+        return count == 0;
     }
 
     /**
@@ -39,22 +30,14 @@ public class Queue {
      * @return true if queue is full or false if it is not
      */
     public boolean isFull() { //check whether the queue is already full
-        if ((front == 0 && back == size-1) ||
-                (back == front-1))
-        {
-            System.out.println("Queue is Full");
-            return true;
-        } else {
-            return false;
-        }
-
+        return  (count == maxSize);
     }
 
     /**
      *
      * @return the maximum size of the queue
      */
-    protected int getMaxSize(){
+    int getMaxSize(){
         return maxSize;
 
     }
@@ -63,59 +46,62 @@ public class Queue {
      * adds newTask to the end of the queue
      * @param newTask is the name and priority determined by user in QueueTest
      */
-    public void enqueue(Task newTask){
-        this.isFull();
-        if (front == -1) {// Insert First Element
-            front = 0;
-            back = 0;
-            taskArr[back] = newTask;
-        } else if (back == (size - 1) && front != 0)
-        {
-            back = 0;
-            taskArr[back] = newTask;
-        } else {
-            back++;
-            taskArr[back] = newTask;
+    public void enqueue(Task newTask) {
+        if (isFull()) {
+            System.out.println("Queue is Full");
         }
+        if (front == -1)
+            front = 0;
 
+        //Circular Code Changing
+        if (back == maxSize - 1) {
+            back = 0;
+            taskArr[back] = newTask;
+        } else
+            taskArr[++back] = newTask;
+
+        count++;
     }
 
     /**
      * simply remove the first task from the queue.
      */
     public void dequeue(){
-        this.isEmpty();
-        if (front == -1){
+
+
+
+        if (isEmpty()){
             System.out.println("Queue is Empty");
         }
-
-        taskArr[front] = null;
-        if (front == back){
-            front = -1;
-            back = -1;
-        }else if (front == size-1)
+        //taskArr[front] = null;
+        if (front == maxSize-1)
             front = 0;
         else
             front++;
-
+        count--;
     }
 
     /**
      * displays all tasks in the queue from “front” to “back”
      */
     public void display(){
-            if (back >= front)
-            {
-                for (int i = front; i <= back; i++)
-                    System.out.println(taskArr[i].getDescription().toString());
-            }
-            else
-            {
-                for (int i = front; i < size; i++)
-                    System.out.println(taskArr[i].getDescription().toString());
+        String[] stringArr = new String[count];
 
-                for (int i = 0; i <= back; i++)
-                    System.out.println(taskArr[i].getDescription().toString());
+            if (back >= front) {
+                for (int i = front; i <= back; i++){
+                    System.out.println(taskArr[i].getDescription());
+               // stringArr[i] = taskArr[i].getDescription() + " ";
+                }
+            } else {
+                for (int i = front; i < count; i++) {
+                    System.out.println(taskArr[i].getDescription());
+                  //  stringArr[i] = taskArr[i].getDescription() + " ";
+                }
+
+                for (int i = 0; i <= back; i++) {
+                    System.out.println(taskArr[i].getDescription());
+                    //stringArr[i] = taskArr[i].getDescription() + " ";
+                }
             }
         }
 }
