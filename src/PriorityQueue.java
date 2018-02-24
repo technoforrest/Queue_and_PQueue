@@ -1,56 +1,78 @@
+/**
+ * This program takes input from userr and places it in a queue or priority queue
+ * CPSC 224-01, Spring 2018
+ * Programming Assignment #4
+ *
+ * @author Danielle Forrest
+ * @version v1.0 2/23/18
+ */
 
 public class PriorityQueue extends Queue {
-    private final Task[] pTaskArr;
     private final int maxSize;
-    private int front;
-    private int count;
 
-
-
+    /**
+     * Parameter constructor
+     *
+     * @param s is the size of the queue determined in QueueTest
+     */
     PriorityQueue(int s) {
         super(s);
         maxSize = s;
-        pTaskArr = super.taskArr;
-        front = super.front;
-        count = super.count;
-
     }
+
+    /**
+     * Places task in priority queue based on priority. Higher number has more priority
+     *
+     * @param newTask is the name and priority determined by user in QueueTest
+     */
     @Override
     public void enqueue(Task newTask) {
-        if (count == maxSize) {
+        if (super.isFull()) {
             System.out.println("PQueue is full!");
             return;
         }
+
         if (count == 0) {// Insert First Element
-            front++;
-            pTaskArr[front] = newTask;
-            count++;
+            super.front = 0;
+            super.taskArr[super.front] = newTask;
+            super.count++;
         } else {
             int i;
-            for (i = count - 1; i >= 0; i--) {
-                if (newTask.getPriority() > pTaskArr[i].getPriority())
-                    pTaskArr[i + 1] = pTaskArr[i];
-                else
+            for (i = super.count - 1; i >= 0; i--) {
+                if (newTask.getPriority() > super.taskArr[i].getPriority()) {
+                    super.taskArr[i + 1] = super.taskArr[i];
+                } else
                     break;
             }
-            pTaskArr[i + 1] = newTask;
-            count++;
+            super.taskArr[i + 1] = newTask;
+            super.front++;
+            super.count++;
         }
     }
+
+    /**
+     * removes item from front of priority queue.
+     */
     @Override
-    public void dequeue()
-    {
-        if(super.isEmpty()){
+    public void dequeue() {
+        if (super.isEmpty()) {
             System.out.println("PQueue is empty");
         }
-        pTaskArr[count - 1] = null;
-        front++;
-        count--;
+        super.taskArr[super.front] = null;
+        super.front--;
+        super.count--;
+
     }
+
+    /**
+     * displays priority queue
+     */
     @Override
     public void display() {
-        for (int i = 0 ; i < count ; i++){
-            System.out.println(pTaskArr[i].getDescription() + " " + pTaskArr[i].getPriority());
+        for (int i = 0; i < count; i++) {
+            System.out.println(super.taskArr[i].getDescription() + " " + super.taskArr[i].getPriority());
         }
     }
+
+
 }

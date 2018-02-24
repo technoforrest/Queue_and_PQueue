@@ -1,23 +1,46 @@
+/**
+ * This program takes input from userr and places it in a queue or priority queue
+ * CPSC 224-01, Spring 2018
+ * Programming Assignment #4
+ *
+ * @author Danielle Forrest
+ * @version v1.0 2/23/18
+ */
+
 public class Task {
     private String taskDescr;
     private int priority;
 
-    protected void taskDescription (String string){
-       taskDescr = string;
+    /**
+     * sets value of task description
+     *
+     * @param string contains task description determined by user input in QueueTest
+     */
+    protected void taskDescription(String string) {
+        taskDescr = string;
 
     }
-    /*private void priorityTask(int num){
-        // A larger number means a higher priority.
-        // If different tasks happen to have
-        // the same priority, follow the rule “First-Come-First-Serve (FCFS)”.
-    }*/
-     public String getDescription(){
-       return taskDescr;
+
+    /**
+     * @return returns  task description
+     */
+    public String getDescription() {
+        return taskDescr;
     }
-    protected void setPriority(int p){
+
+    /**
+     * sets the priority for the task
+     *
+     * @param p the priority number of the tasks
+     */
+    protected void setPriority(int p) {
         priority = p;
     }
-    public  int getPriority(){
-       return priority;
+
+    /**
+     * @return returns the priority of the task
+     */
+    public int getPriority() {
+        return priority;
     }
 }
